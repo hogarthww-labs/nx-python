@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "nx-python",
+  "version": "0.0.1",
+  "schematics": {
+    "nx-python": {
+      "aliases": ["app"],
+      "factory": "./src/schematics/nx-python/schematic",
+      "schema": "./src/schematics/nx-python/schema.json",
+      "description": "Creates a new Python Application"
+    }
+  }
+}
