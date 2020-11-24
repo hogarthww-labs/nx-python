@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "nx-python/nx-python": ["libs/nx-python/src/index.ts"]
+      "nx-python/nx-python": ["packages/nx-python/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
