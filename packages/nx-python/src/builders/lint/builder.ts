@@ -2,7 +2,7 @@ import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/ar
 import { from, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { LintBuilderSchema } from './schema'
-import { runPythonCommand } from '../../utils/py-utils'
+import { getCliOptions, runPythonCommand } from '../../utils/py-utils'
 
 export function runBuilder(options: LintBuilderSchema, context: BuilderContext): Observable<BuilderOutput> {
   return from(context.getProjectMetadata(context?.target?.project)).pipe(
@@ -12,7 +12,7 @@ export function runBuilder(options: LintBuilderSchema, context: BuilderContext):
       const sources = `${root}/src/*.py`
 
       // Executing linting using the flake8 module
-      return runPythonCommand(context, 'lint', [sources])
+      return runPythonCommand(context, 'lint', [sources], getCliOptions(options))
     }),
   )
 }
