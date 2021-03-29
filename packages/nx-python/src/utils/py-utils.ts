@@ -1,5 +1,6 @@
 import { BuilderContext } from '@angular-devkit/architect'
 import { execSync } from 'child_process'
+import { ServeBuilderSchema } from '../builders/serve/schema'
 
 export function runPythonCommand(
   context: BuilderContext,
@@ -35,4 +36,15 @@ export function runPythonCommand(
     context.logger.error(`Failed to execute command: ${execute}`, e)
     return { success: false }
   }
+}
+
+export function getCliOptions(options: ServeBuilderSchema): ServeBuilderSchema {
+  const _options: ServeBuilderSchema = {};
+  if(options.cmd) {
+    _options.cmd = options.cmd;
+  }
+  if(options.cwd) {
+    _options.cwd = options.cwd;
+  }
+  return _options;
 }
