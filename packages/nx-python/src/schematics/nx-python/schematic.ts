@@ -16,9 +16,10 @@ import {
   toFileName,
   updateWorkspace,
 } from '@nrwl/workspace';
-import { NxPythonSchematicSchema } from './schema';
+import { NxPythonSchematicSchema, NxPythonTemplate } from './schema';
 
-import { join, normalize } from 'path'
+import { join } from 'path'
+import { getBuildOptions, getLintOptions, getServeOptions, getTestOptions } from './target-options';
 
 /**
  * Depending on your needs, you can change this to either `Library` or `Application`
@@ -55,7 +56,8 @@ function normalizeOptions(options: NxPythonSchematicSchema): NormalizedSchema {
 
 function addFiles(options: NormalizedSchema): Rule {
   return mergeWith(
-    apply(url(`./files`), [
+    apply(
+      url(getTemplateFilesPath(options.template)), [
       applyTemplates({
         ...options,
         ...names(options.name),
@@ -64,6 +66,16 @@ function addFiles(options: NormalizedSchema): Rule {
       move(options.projectRoot),
     ])
   );
+}
+
+function getTemplateFilesPath(template: NxPythonTemplate) {
+  if(template === 'django') {
+    return `./files/django`;
+  }
+  if(template === 'flask') {
+    return `./templates/flask`;
+  }
+  return `./files/default`;
 }
 
 export default function (options: NxPythonSchematicSchema): Rule {
@@ -80,39 +92,28 @@ export default function (options: NxPythonSchematicSchema): Rule {
           projectType,
         })
 
-        const options = {
-          outputPath: join(normalize('dist'), appProjectRoot),
-          main: join(project.sourceRoot,'hello.py'),
-        }
-
         project.targets.add({
           name: 'build',
           builder: '@nx-python/nx-python:build',
-          options
+          options: getBuildOptions(normalizedOptions.template, project, normalizedOptions)
         })
 
         project.targets.add({
           name: 'serve',
           builder: '@nx-python/nx-python:serve',
-          options: {
-            main: join(project.sourceRoot,'hello.py'),
-          },
+          options: getServeOptions(normalizedOptions.template, project),
         })
 
         project.targets.add({
           name: 'test',
           builder: '@nx-python/nx-python:test',
-          options: {
-            main: join(project.sourceRoot,'test_hello.py'),
-          },
+          options: getTestOptions(normalizedOptions.template, project),
         })
 
         project.targets.add({
           name: 'lint',
           builder: '@nx-python/nx-python:lint',
-          options: {
-            main: join(project.sourceRoot,'hello.py'),
-          },
+          options: getLintOptions(normalizedOptions.template, project),
         })
 
     }),
