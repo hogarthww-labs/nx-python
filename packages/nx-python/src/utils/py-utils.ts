@@ -1,33 +1,29 @@
 import { BuilderContext } from '@angular-devkit/architect'
 import { execSync } from 'child_process'
 import { ServeBuilderSchema } from '../builders/serve/schema'
+import { CommandType } from '..';
+import { getCorePythonExecuteCommand, getDjangoExecuteCommand } from './command';
 
 export function runPythonCommand(
   context: BuilderContext,
-  command: 'build' | 'lint' | 'serve' | 'test',
+  command: CommandType,
   params: string[],
-  options: { cwd?: string; cmd?: string } = {},
-): { success: boolean } {
+  options: ServeBuilderSchema = {},
+): { success: boolean; } {
   // Take the parameters or set defaults
   const cmd = options.cmd || 'python3'
   const cwd = options.cwd || process.cwd()
+  // let execute = '';
+  const commandExecutor = {
+    default: getCorePythonExecuteCommand,
+    django: getDjangoExecuteCommand
+  };
 
-  let mutate_command = ""
+  if(!commandExecutor[options.templateType]) {
+    throw new Error('Invalid template type!');
+  }
 
-  // Create the command to execute
-  if(command=="serve")
-    mutate_command = ""
-  else if(command=="build")
-    mutate_command = "-m py_compile"
-  else if(command=="lint")
-    mutate_command = "-m flake8"
-  else if(command=="test")
-    mutate_command = "-m unittest discover -s ./ -p"
-  else
-    mutate_command = command
-    
-  const execute = `${cmd} ${mutate_command} ${params.join(' ')}`
-
+  const execute = commandExecutor[options.templateType](cmd, command, params);
   try {
     context.logger.info(`Executing command: ${execute}`)
     execSync(execute, { cwd, stdio: [0, 1, 2] })
@@ -39,7 +35,7 @@ export function runPythonCommand(
 }
 
 export function getCliOptions(options: ServeBuilderSchema): ServeBuilderSchema {
-  const _options: ServeBuilderSchema = {};
+  const _options: ServeBuilderSchema = {...options};
   if(options.cmd) {
     _options.cmd = options.cmd;
   }

@@ -26,14 +26,14 @@
     "template": {
       "type": "string",
       "alias": "f",
-      "default": "none",
+      "default": "default",
       "x-prompt": {
         "message": "Which python framework would you like to use for the application?",
         "type": "list",
         "items": [
           {
-            "value": "(none)",
-            "label": "none"
+            "value": "default",
+            "label": "(default) [ https://www.python.org/ ]"
           },
           {
             "value": "django",
