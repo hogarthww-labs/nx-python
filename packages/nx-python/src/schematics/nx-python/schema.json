@@ -22,7 +22,32 @@
       "type": "string",
       "description": "A directory where the project is placed",
       "alias": "d"
+    },
+    "template": {
+      "type": "string",
+      "alias": "f",
+      "default": "default",
+      "x-prompt": {
+        "message": "Which python framework would you like to use for the application?",
+        "type": "list",
+        "items": [
+          {
+            "value": "default",
+            "label": "(default) [ https://www.python.org/ ]"
+          },
+          {
+            "value": "django",
+            "label": "django  [ https://www.djangoproject.com/ ]"
+          },
+          {
+            "value": "flask",
+            "label": "Flask [ https://pypi.org/project/Flask/ ]"
+          }
+        ]
+      }
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }

@@ -86,4 +86,8 @@ nx test <app-name>
 ```
 ## Contributing
 
-🐍 All contributions are welcome. Make sure you follow the [code of conduct](CODE_OF_CONDUCT.MD) in this repository. 
+🐍  All contributions are welcome. Make sure you follow the [code of conduct](CODE_OF_CONDUCT.md) in this repository. 
+
+## MIT License
+
+Made with 💜 by [Code ON](https://codeon.rocks) | [Melvin Vega](https://github.com/melveg) & [Diana Rodriguez](https://github.com/sponsors/alphacentauri82)
