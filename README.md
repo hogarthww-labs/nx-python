@@ -152,6 +152,15 @@ If you are using the default native `unittest` python module to for tests:
 
 See more info here: [unittest](https://docs.python.org/3/library/unittest.html)
 
+## Dependency Graph
+
+`packages/project-graph` includes some code which detects python projects and adds modified files in python projects to the dependency graph for the project.
+
+To detect a python project it must either:
+
+* have one or more python files (`.py` extension)
+* have `"compiler": "python"` set in project `build` options
+
 ## Contributing
 
 🐍  All contributions are welcome. Make sure you follow the [code of conduct](CODE_OF_CONDUCT.md) in this repository.

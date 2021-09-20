@@ -27,9 +27,11 @@
   },
   "private": false,
   "dependencies": {
+    "@nrwl/devkit": "^12.9.0",
     "change-case": "^4.1.2",
     "cosmiconfig": "^7.0.1",
-    "global": "^4.4.0"
+    "global": "^4.4.0",
+    "recursive-readdir": "^2.2.2"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "10.4.4",
