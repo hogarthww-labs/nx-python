@@ -1,0 +1,26 @@
+{
+  "name": "@nx-python/nx-python-project-graph",
+  "version": "1.0.1",
+  "main": "src/index.js",
+  "license": "MIT",
+  "description": "This library was generated with [Nx](https://nx.dev).",
+  "scripts": {
+    "test": "nx test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeonrocks/nx-python.git"
+  },
+  "keywords": [
+    "nx",
+    "python"
+  ],
+  "author": "Code On LLC",
+  "bugs": {
+    "url": "https://github.com/codeonrocks/nx-python/issues"
+  },
+  "homepage": "https://github.com/codeonrocks/nx-python#readme",
+  "devDependencies": {
+    "nxpm": "^1.15.0"
+  }
+}
