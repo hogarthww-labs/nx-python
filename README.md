@@ -105,16 +105,23 @@ More information here: [py_compile](https://docs.python.org/3/library/py_compile
 
 ### Linting the application
 
-Unfortunately Python doesn't have a native linting module(yet!). `nx-python` uses the `Flake8` module to lint your application. It is required that you install this module beforehand. More info here: [Flake8](https://flake8.pycqa.org/en/latest/)
+Unfortunately Python doesn't have a native linting module(yet!).
+It is required that you install the linting module beforehand.
 
-```bash
-pip install Flake8
-```
-
-After that you can perform the lint process with:
+After you have installed the linting module you can perform the lint process with:
 
 ```bash
 nx lint <app-name>
+```
+
+### Flake8
+
+`nx-python` uses the `Flake8` module by default to lint your application.
+
+More info here: [Flake8](https://flake8.pycqa.org/en/latest/)
+
+```bash
+pip install Flake8
 ```
 
 ### Serving the application
@@ -125,18 +132,25 @@ This is going to execute the main file in your python application.
 nx serve <app-name>
 ```
 
+For flask and django, the main file is `manage.py`
+
 ### Testing your application
 
-The `test` command is going to execute all the test units inside your python app. You can add new test unit files if you want, but there are two requirements that you must meet:
-
-- The filename must include the prefix `test`
-- Because we are using the native `unittest` python module to make our tests, you are going to create the tests based on this approach. More info here: [unittest](https://docs.python.org/3/library/unittest.html)
+The `test` command is going to execute all the test units inside your python app. You can add new test unit files.
 
 To test your python app, execute the command:
 
 ```bash
 nx test <app-name>
 ```
+
+### Unittest
+
+If you are using the default native `unittest` python module to for tests:
+
+* The filename must include the prefix `test`
+
+See more info here: [unittest](https://docs.python.org/3/library/unittest.html)
 
 ## Contributing
 
