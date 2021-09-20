@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { hasPythonFiles } from './has-python-files';
-// import { BuilderContext } from '@angular-devkit/architect';
 import {
   ProjectGraphBuilder,
   ProjectGraph,
   ProjectGraphProcessorContext,
 } from '@nrwl/devkit';
+
+import * as path from 'path';
+
+import { hasPythonFiles } from './has-python-files';
 
 /**
  * Nx Project Graph plugin for go
@@ -30,14 +32,22 @@ export const processProjectGraph = (
   const isPythonProject = (project) =>
     hasPythonCompiler(project) || hasPythonFiles(project.root);
 
+  const pythonFileExtensions = ['py', '.pyw', 'pyi', '.json', '.toml', '.xml'];
+  const isPythonFile = (file) =>
+    pythonFileExtensions.includes(path.extname(file));
+
+  const filterPythonFiles = (files: string[]) => files.filter(isPythonFile);
+
   projectNames.map((projName) => {
     const project = context.workspace.projects[projName];
     if (!isPythonProject(project)) return;
+    const projFiles = projectNames[projName];
+    const pythonFiles = filterPythonFiles(projFiles);
     builder.addNode({
       name: projName,
       type: 'python',
       data: {
-        files: projectNames[projName],
+        files: pythonFiles,
       },
     });
   });
