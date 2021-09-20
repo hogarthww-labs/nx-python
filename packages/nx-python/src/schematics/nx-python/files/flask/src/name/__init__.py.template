@@ -1,0 +1,73 @@
+"""Module for the `<%= name %>` service."""
+# -*- coding: utf-8 -*-
+
+import logging.config
+import syslog
+import traceback
+
+from flask import Flask
+from flask_restful import Api
+from werkzeug.exceptions import NotFound, Unauthorized
+from werkzeug.routing import RequestRedirect
+
+from <%= name %> import settings
+
+
+###########################
+# Setup and configuration #
+###########################
+app = Flask(__name__)
+app.config['ERROR_404_HELP'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True
+api = Api(app)
+
+
+logging.config.dictConfig({
+    'version': 1,
+    'formatters': {
+        'default': {
+            'format': (
+                '[%(levelname)s] %(asctime)s - %(name)s - lineno: %(lineno)d - %(message)s'   # noqa: E501
+            ),
+            'datefmt': '%d/%b/%Y:%H:%M:%S %z',
+        }
+    },
+    'handlers': {
+        'syslog': {
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'default',
+            'address':
+                '/var/run/syslog' if getattr(settings, 'DEV_MODE', False)
+                else '/dev/log',
+            'facility': syslog.LOG_LOCAL1,
+        }
+    },
+    'loggers': {
+        '<%= name %>': {
+            'handlers': ['syslog'],
+        },
+    }
+})
+
+
+@app.errorhandler(Exception)
+def unhandled_server_error(e):
+    """Unhandled error handler."""
+    if isinstance(e, (NotFound, RequestRedirect, Unauthorized)):
+        return e
+    err_trace = traceback.format_tb(e.__traceback__)
+    syslog.syslog(
+        syslog.LOG_ERR,
+        "## [<%= name %>] UNHANDLED ERROR TRACEBACK: START ##")
+    syslog.syslog(
+        syslog.LOG_ERR,
+        "Error type: {err_type}, cause: {err_msg}".format(
+            err_type=str(type(e)), err_msg=str(e))
+    )
+    syslog.syslog(syslog.LOG_ERR, "-- Traceback:")
+    for line in err_trace:
+        syslog.syslog(syslog.LOG_ERR, line)
+    syslog.syslog(
+        syslog.LOG_ERR,
+        "## [<%= name %>] UNHANDLED ERROR TRACEBACK: END ##")
+    return "<%= name %> Internal Server Error", 500

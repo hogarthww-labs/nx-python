@@ -1,0 +1,37 @@
+"""Package configuration for `<%= name %>`."""
+import os
+
+import setuptools
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+setuptools.setup(
+    name="<%= name %>",
+    version=open(os.path.join(here, 'VERSION')).read().strip(),
+    url="<%= repo_url %>",
+    description='<%= description %>',
+    long_description=open(os.path.join(here, 'README.md')).read(),
+    classifiers=[
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+    ],
+    packages=setuptools.find_packages('src', exclude=('tests',)),
+    package_dir={'': 'src'},
+    include_package_data=True,
+    zip_safe=False,
+
+    install_requires=[
+        'Flask',
+        'flask-restful',
+        'Flask-script',
+        'gevent',
+        'Werkzeug>=0.14',
+        "pillow>=2.3.0,<3.0.0",
+    ],
+    extras_require={
+        'production': [
+            'gunicorn',
+        ],
+    }
+)

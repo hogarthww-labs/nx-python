@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    wadl.xsl (07-Sep-2012)
+    Transforms Web Application Description Language (WADL) XML documents into HTML.
+    Mark Sawers <mark.sawers@ipc.com>
+    See example_wadl.xml at http://github.com/ipcsystems/wadl-stylesheet to explore this stylesheet's capabilities
+    and the README.txt for other usage information.
+    Note that the contents of a doc element is rendered as a:
+        * hyperlink if the title attribute contains is equal to 'Example'
+        * mono-spaced font ('pre' tag) if content contains the text 'Example'
+    Limitations:
+        * Ignores globally defined methods, referred to from a resource using a method reference element.
+          Methods must be embedded in a resource element.
+        * Ditto for globally defined representations. Representations must be embedded within request
+          and response elements.
+        * Ignores type and queryType attributes of resource element.
+        * Ignores resource_type element.
+        * Ignores profile attribute of representation element.
+        * Ignores path attribute and child link elements of param element.
+    Copyright (c) 2012 IPC Systems, Inc.
+    Parts of this work are adapted from Mark Notingham's wadl_documentation.xsl, at
+        https://github.com/mnot/wadl_stylesheets.
+    This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 License.
+    To view a copy of this license, visit
+        http://creativecommons.org/licenses/by-sa/3.0/
+    or send a letter to
+        Creative Commons
+        543 Howard Street, 5th Floor
+        San Francisco, California, 94105, USA
+ -->
+<xsl:stylesheet
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+ xmlns:wadl="http://wadl.dev.java.net/2009/02"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ xmlns:html="http://www.w3.org/1999/xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+>
+</xsl:stylesheet>

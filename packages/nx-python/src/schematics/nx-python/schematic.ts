@@ -7,6 +7,7 @@ import {
   Rule,
   url,
 } from '@angular-devkit/schematics';
+
 import {
   addProjectToNxJsonInTree,
   names,
@@ -16,10 +17,14 @@ import {
   toFileName,
   updateWorkspace,
 } from '@nrwl/workspace';
-import { NxPythonSchematicSchema, NxPythonTemplate } from './schema';
 
-import { join } from 'path'
-import { getBuildOptions, getLintOptions, getServeOptions, getTestOptions } from './target-options';
+import { NxPythonSchematicSchema, NxPythonTemplate } from './schema';
+import {
+  getBuildOptions,
+  getLintOptions,
+  getServeOptions,
+  getTestOptions,
+} from './target-options';
 
 /**
  * Depending on your needs, you can change this to either `Library` or `Application`
@@ -56,8 +61,7 @@ function normalizeOptions(options: NxPythonSchematicSchema): NormalizedSchema {
 
 function addFiles(options: NormalizedSchema): Rule {
   return mergeWith(
-    apply(
-      url(getTemplateFilesPath(options.template)), [
+    apply(url(getTemplateFilesPath(options.template)), [
       applyTemplates({
         ...options,
         ...names(options.name),
@@ -69,11 +73,11 @@ function addFiles(options: NormalizedSchema): Rule {
 }
 
 function getTemplateFilesPath(template: NxPythonTemplate) {
-  if(template === 'django') {
+  if (template === 'django') {
     return `./files/django`;
   }
-  if(template === 'flask') {
-    return `./templates/flask`;
+  if (template === 'flask') {
+    return `./files/flask`;
   }
   return `./files/default`;
 }
@@ -82,40 +86,42 @@ export default function (options: NxPythonSchematicSchema): Rule {
   const normalizedOptions = normalizeOptions(options);
   return chain([
     updateWorkspace((workspace) => {
-      const appProjectRoot = normalizedOptions.projectRoot
-      const sourceRoot = `${appProjectRoot}/src`
-      const project = workspace.projects
-        .add({
-          name: normalizedOptions.projectName,
-          root: appProjectRoot,
-          sourceRoot,
-          projectType,
-        })
+      const appProjectRoot = normalizedOptions.projectRoot;
+      const sourceRoot = `${appProjectRoot}/src`;
+      const project = workspace.projects.add({
+        name: normalizedOptions.projectName,
+        root: appProjectRoot,
+        sourceRoot,
+        projectType,
+      });
 
-        project.targets.add({
-          name: 'build',
-          builder: '@nx-python/nx-python:build',
-          options: getBuildOptions(normalizedOptions.template, project, normalizedOptions)
-        })
+      project.targets.add({
+        name: 'build',
+        builder: '@nx-python/nx-python:build',
+        options: getBuildOptions(
+          normalizedOptions.template,
+          project,
+          normalizedOptions
+        ),
+      });
 
-        project.targets.add({
-          name: 'serve',
-          builder: '@nx-python/nx-python:serve',
-          options: getServeOptions(normalizedOptions.template, project),
-        })
+      project.targets.add({
+        name: 'serve',
+        builder: '@nx-python/nx-python:serve',
+        options: getServeOptions(normalizedOptions.template, project),
+      });
 
-        project.targets.add({
-          name: 'test',
-          builder: '@nx-python/nx-python:test',
-          options: getTestOptions(normalizedOptions.template, project),
-        })
+      project.targets.add({
+        name: 'test',
+        builder: '@nx-python/nx-python:test',
+        options: getTestOptions(normalizedOptions.template, project),
+      });
 
-        project.targets.add({
-          name: 'lint',
-          builder: '@nx-python/nx-python:lint',
-          options: getLintOptions(normalizedOptions.template, project),
-        })
-
+      project.targets.add({
+        name: 'lint',
+        builder: '@nx-python/nx-python:lint',
+        options: getLintOptions(normalizedOptions.template, project),
+      });
     }),
     addProjectToNxJsonInTree(normalizedOptions.projectName, {
       tags: normalizedOptions.parsedTags,

@@ -1,0 +1,12 @@
+"""Main module for the `<%= name %>` service."""
+import logging
+# TODO
+
+from <%= name %> import api, app
+
+log = logging.getLogger("zonza5_api_share")
+
+# TODO
+
+if __name__ == "__main__":
+    app.run()

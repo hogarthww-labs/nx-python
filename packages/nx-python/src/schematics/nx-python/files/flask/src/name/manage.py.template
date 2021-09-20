@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+
+"""
+manage.py is a thin wrapper that takes care of several things.
+It provides runserver and more.
+Please run `manage.py help` to see all options.
+"""
+
+from flask_script import Manager, Server, Shell
+
+from zonza5_api_share.application import app
+from zonza5_api_share import settings
+
+manager = Manager(app)
+
+
+def make_shell_context():
+    """Make a flask-script shell context containing app."""
+    return dict(app=app)
+
+
+manager.add_command('shell', Shell(make_context=make_shell_context))
+manager.add_command(
+    'runserver', Server(host='0.0.0.0', port=7000, use_debugger=True)
+)
+
+
+def main():
+    """Run development server."""
+    if settings.TEST_MODE is True:
+        from <%= name %>.gabbi_utils import enable_test_mode
+        enable_test_mode()
+    manager.run(default_command='runserver')
+
+
+if __name__ == '__main__':
+    main()

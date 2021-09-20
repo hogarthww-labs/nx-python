@@ -1,0 +1,52 @@
+# <%= title %>
+
+<%= description %>
+
+## Endpoints
+
+TODO
+
+## Setup locally
+
+### Create virtualenv and install dependencies
+
+```bash
+virtualenv venv
+source venv/bin/activate
+# pip install ...
+pip install -r requirements.txt
+```
+
+### Setup env variable
+
+```bash
+# TODO
+```
+
+### Run server
+
+Go to project root and run:
+
+```bash
+export PYTHONPATH=`pwd`/src
+python src/manage.py
+```
+
+It should start at `localhost:7000`
+
+### API tests mode
+
+It assumes you have done previous steps.
+To run api test mode, it is required to set `mode` parameter to `gabbi`
+in test config (take a look at example_config.ini).
+
+#### Run tests
+
+1. Run server
+2. Activate virtualenv `source venv/bin/activate`
+3. Install gabbi package `pip install gabbi`
+4. Run tests using unittest
+
+```bash
+gabbi-run localhost:7000 -- src/tests/gabbi/*
+```
