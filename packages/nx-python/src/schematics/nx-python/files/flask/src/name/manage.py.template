@@ -8,8 +8,8 @@ Please run `manage.py help` to see all options.
 
 from flask_script import Manager, Server, Shell
 
-from zonza5_api_share.application import app
-from zonza5_api_share import settings
+from <%= snakeName %>.application import app
+from <%= snakeName %> import settings
 
 manager = Manager(app)
 
@@ -28,7 +28,7 @@ manager.add_command(
 def main():
     """Run development server."""
     if settings.TEST_MODE is True:
-        from <%= name %>.gabbi_utils import enable_test_mode
+        from <%= snakeName %>.gabbi_utils import enable_test_mode
         enable_test_mode()
     manager.run(default_command='runserver')
 

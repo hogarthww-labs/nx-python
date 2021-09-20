@@ -18,6 +18,8 @@ import {
   updateWorkspace,
 } from '@nrwl/workspace';
 
+import { snakeCase } from 'change-case';
+
 import { NxPythonSchematicSchema, NxPythonTemplate } from './schema';
 import {
   getBuildOptions,
@@ -34,16 +36,22 @@ const projectType = ProjectType.Application;
 
 interface NormalizedSchema extends NxPythonSchematicSchema {
   projectName: string;
+  snakeName: string;
+  repoUrl: string;
   projectRoot: string;
   projectDirectory: string;
+  projectDescription: string;
   parsedTags: string[];
 }
 
 function normalizeOptions(options: NxPythonSchematicSchema): NormalizedSchema {
   const name = toFileName(options.name);
+  const snakeName = snakeCase(name);
   const projectDirectory = options.directory
     ? `${toFileName(options.directory)}/${name}`
     : name;
+  const projectDescription = options.description;
+  const repoUrl = options.repoUrl;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${projectRootDir(projectType)}/${projectDirectory}`;
   const parsedTags = options.tags
@@ -53,6 +61,9 @@ function normalizeOptions(options: NxPythonSchematicSchema): NormalizedSchema {
   return {
     ...options,
     projectName,
+    snakeName,
+    repoUrl,
+    projectDescription,
     projectRoot,
     projectDirectory,
     parsedTags,
@@ -88,8 +99,10 @@ export default function (options: NxPythonSchematicSchema): Rule {
     updateWorkspace((workspace) => {
       const appProjectRoot = normalizedOptions.projectRoot;
       const sourceRoot = `${appProjectRoot}/src`;
+      const { projectName } = normalizedOptions;
+      const name = names(projectName).propertyName;
       const project = workspace.projects.add({
-        name: normalizedOptions.projectName,
+        name: projectName,
         root: appProjectRoot,
         sourceRoot,
         projectType,

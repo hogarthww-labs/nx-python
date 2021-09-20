@@ -1,6 +1,6 @@
-# <%= title %>
+# <%= projectName %>
 
-<%= description %>
+<%= projectDescription %>
 
 ## Endpoints
 

@@ -1,7 +1,7 @@
-"""Index Doc module for the `<%= name %>` service."""
+"""Index Doc module for the `<%= snakeName %>` service."""
 # -*- coding: utf-8 -*-
 
 INDEX_DOC = """<div>
-    <b>/api/<%= name %>/v1/</b>
+    <b>/api/<%= snakeName %>/v1/</b>
 </div>
 """  # noqa: ignore=E501

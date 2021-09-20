@@ -39,6 +39,8 @@ nx g @nx-python/nx-python:app <app-name>
 ### Advanced options
 
 * `--tags` or `-t` list of tags for project (used for linting)
+* `--description` Description of project
+* `--repoUrl` Repository URL
 * `--directory` or `-d` A directory where the project is placed
 * `--template` or `-f` python framework to use (f.ex `django` or `flask`, where `python` is used by default)
 

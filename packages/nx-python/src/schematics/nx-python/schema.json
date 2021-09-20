@@ -18,6 +18,16 @@
       "description": "Add tags to the project (used for linting)",
       "alias": "t"
     },
+    "description": {
+      "type": "string",
+      "description": "Project description",
+      "alias": "d"
+    },
+    "repoUrl": {
+      "type": "string",
+      "description": "Repository url",
+      "alias": "r"
+    },
     "directory": {
       "type": "string",
       "description": "A directory where the project is placed",

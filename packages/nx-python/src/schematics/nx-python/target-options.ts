@@ -1,6 +1,7 @@
 // TODO: remove `any` types later on
 
 import { join, normalize } from 'path';
+
 import { NxPythonTemplate } from './schema';
 
 interface IProject {
@@ -55,7 +56,7 @@ function getTestMainFilePath(template: NxPythonTemplate, project): string {
 }
 
 function getMainFilePath(template: NxPythonTemplate, project): string {
-  if (template === 'django') {
+  if (template === 'django' || template === 'flask') {
     return join(project.root, 'manage.py');
   }
   return join(project.sourceRoot, 'hello.py');

@@ -1,4 +1,4 @@
-"""Package configuration for `<%= name %>`."""
+"""Package configuration for `<%= snakeName %>`."""
 import os
 
 import setuptools
@@ -6,9 +6,9 @@ import setuptools
 here = os.path.abspath(os.path.dirname(__file__))
 
 setuptools.setup(
-    name="<%= name %>",
+    name="<%= snakeName %>",
     version=open(os.path.join(here, 'VERSION')).read().strip(),
-    url="<%= repo_url %>",
+    url="<%= repoUrl %>",
     description='<%= description %>',
     long_description=open(os.path.join(here, 'README.md')).read(),
     classifiers=[

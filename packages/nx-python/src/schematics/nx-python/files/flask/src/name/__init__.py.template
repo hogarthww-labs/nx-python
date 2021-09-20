@@ -1,4 +1,4 @@
-"""Module for the `<%= name %>` service."""
+"""Module for the `<%= snakeName %>` service."""
 # -*- coding: utf-8 -*-
 
 import logging.config
@@ -10,7 +10,7 @@ from flask_restful import Api
 from werkzeug.exceptions import NotFound, Unauthorized
 from werkzeug.routing import RequestRedirect
 
-from <%= name %> import settings
+from <%= snakeName %> import settings
 
 
 ###########################
@@ -43,7 +43,7 @@ logging.config.dictConfig({
         }
     },
     'loggers': {
-        '<%= name %>': {
+        '<%= snakeName %>': {
             'handlers': ['syslog'],
         },
     }
@@ -58,7 +58,7 @@ def unhandled_server_error(e):
     err_trace = traceback.format_tb(e.__traceback__)
     syslog.syslog(
         syslog.LOG_ERR,
-        "## [<%= name %>] UNHANDLED ERROR TRACEBACK: START ##")
+        "## [<%= snakeName %>] UNHANDLED ERROR TRACEBACK: START ##")
     syslog.syslog(
         syslog.LOG_ERR,
         "Error type: {err_type}, cause: {err_msg}".format(
@@ -69,5 +69,5 @@ def unhandled_server_error(e):
         syslog.syslog(syslog.LOG_ERR, line)
     syslog.syslog(
         syslog.LOG_ERR,
-        "## [<%= name %>] UNHANDLED ERROR TRACEBACK: END ##")
-    return "<%= name %> Internal Server Error", 500
+        "## [<%= snakeName %>] UNHANDLED ERROR TRACEBACK: END ##")
+    return "<%= snakeName %> Internal Server Error", 500

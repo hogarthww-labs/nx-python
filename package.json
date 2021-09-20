@@ -27,6 +27,7 @@
   },
   "private": false,
   "dependencies": {
+    "change-case": "^4.1.2",
     "cosmiconfig": "^7.0.1",
     "global": "^4.4.0"
   },
