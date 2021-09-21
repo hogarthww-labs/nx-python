@@ -32,7 +32,16 @@ export const processProjectGraph = (
   const isPythonProject = (project) =>
     hasPythonCompiler(project) || hasPythonFiles(project.root);
 
-  const pythonFileExtensions = ['py', '.pyw', 'pyi', '.json', '.toml', '.xml'];
+  const pythonFileExtensions = [
+    '.py',
+    '.pyw',
+    '.pyi',
+    '.json',
+    '.toml',
+    '.xml',
+    '.yaml',
+    '.yml',
+  ];
   const isPythonFile = (file) =>
     pythonFileExtensions.includes(path.extname(file));
 
